@@ -418,6 +418,28 @@ if __name__ == '__main__':
 				speak (next(res.results).text)
 			except StopIteration:
 				print ("No results")
+		elif "what is the weather in" in data:
+			listening = True
+			api_key = "Your_API_key"
+			weather_url = "http://api.openweathermap.org/data/2.5/weather?"
+			data = data.split(" ")
+			location = str(data[5])
+			url = weather_url + "appid=" + api_key + "&q=" + location 
+			js = requests.get(url).json()
+			if js["cod"] != "404":
+				weather = js["main"] 
+				temp = weather["temp"]
+				hum = weather["humidity"]
+				desc = js["weather"][0]["description"]
+				resp_string = " The temperature in Kelvin is " + str(temp) + " The humidity is " + str(hum) + " and The weather description is "+ str(desc)
+				respond(resp_string)
+			else:
+				respond("City Not Found") 
+				
+				
+#https://github.com/mmirthula02/AI-Personal-Voice-assistant-using-Python/blob/master/venv/virtual.py
+#https://towardsdatascience.com/how-to-build-your-own-ai-personal-assistant-using-python-f57247b4494b
+#https://www.activestate.com/blog/how-to-build-a-digital-virtual-assistant-in-python/
 
 		# elif "" in query:
 			# Command go here
